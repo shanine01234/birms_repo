@@ -8,7 +8,7 @@
         public $password = "1Birms_db";
         public $db_name = "u510162695_db";
         public $conn;
-        
+
 
         public function __construct(){
             $this->conn = mysqli_connect($this->host, $this->user, $this->password, $this->db_name);

@@ -1,6 +1,5 @@
 <?php 
 require_once('inc/header.php');
-echo "hello world";
 ?>
 
 <!DOCTYPE html>

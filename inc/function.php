@@ -3,7 +3,7 @@
     session_start();
     // DATABASE CONNECTION
     class Connection{
-        public $host = "120.0.0.1";
+        public $host = "localhost";
         public $user = "u510162695_birms_db";
         public $password = "1Birms_db";
         public $db_name = "u510162695_birms_db";

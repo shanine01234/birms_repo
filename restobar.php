@@ -240,7 +240,7 @@ require_once('inc/header.php');
     </nav>
     <!-- Cover Image with Text -->
     <div class="cover-container">
-        <img src="bg2.jpg" alt="Cover Image" class="cover-image">
+        <img src="img/bg2.jpg" alt="Cover Image" class="cover-image">
         <div class="cover-text">
             <h1 style="color:white;">Welcome to Bantayan Island Restobar</h1>
             <p>Experience the best dining on the island</p>

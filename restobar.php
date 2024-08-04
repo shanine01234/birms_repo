@@ -150,8 +150,8 @@ require_once('inc/header.php');
     <nav class="navbar navbar-expand-lg navbar-dark bg-light">
         <div class="container-fluid" style="background-color: transparent;"> 
             <a class="navbar-brand" href="#">
-            <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24">
-                <span style="color: black;   ">Bantayan Island Restobar</span>
+           
+                <span style="color: black;   ">Bantayan Island Restobar Ordering System</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -219,7 +219,7 @@ require_once('inc/header.php');
     </ul>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="https://facebook.com" target="_blank">
+            <a class="nav-link" href="https://web.facebook.com/shanine.zaspa.9" target="_blank">
                 <i class="fab fa-facebook"></i>
             </a>
         </li>
@@ -303,4 +303,4 @@ require_once('inc/header.php');
 
 </body>
 
-</html> 
+</html>

@@ -150,8 +150,8 @@ require_once('inc/header.php');
     <nav class="navbar navbar-expand-lg navbar-dark bg-light">
         <div class="container-fluid" style="background-color: transparent;"> 
             <a class="navbar-brand" href="#">
-            <img src="./img/logo.jpg" alt="" width="30" height="24">
-                <span style="color: black;   ">Bantayan Island Restobar</span>
+           
+                <span style="color: black;   ">Bantayan Island Restobar Ordering System</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -252,7 +252,6 @@ require_once('inc/header.php');
         <div class="row p-2 justify-content-center">
             <?php
             $myrow = $oop->displayRestobar();
-           if (count($myrow) > 0) {
             foreach($myrow as $row){
                 ?>
                 <a href="menu.php?restobar=<?=$row['owner_id']?>" style="text-decoration: none; color: black; margin-right: 20px;">
@@ -291,7 +290,6 @@ require_once('inc/header.php');
                 </a>
                 <?php
             }
-           }
             ?>
         </div>
     </div>

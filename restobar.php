@@ -252,6 +252,7 @@ require_once('inc/header.php');
         <div class="row p-2 justify-content-center">
             <?php
             $myrow = $oop->displayRestobar();
+           if (count($myrow) > 0) {
             foreach($myrow as $row){
                 ?>
                 <a href="menu.php?restobar=<?=$row['owner_id']?>" style="text-decoration: none; color: black; margin-right: 20px;">
@@ -290,6 +291,7 @@ require_once('inc/header.php');
                 </a>
                 <?php
             }
+           }
             ?>
         </div>
     </div>

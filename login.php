@@ -10,24 +10,42 @@ if (isset($_POST['login'])) {
         $row = $stmt->fetch_assoc();
 
         if (password_verify($password, $row['password'])) {
-            $_SESSION['name'] = $row['username'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['user_id'] = $row['id'];
-            ?>
-            <script>
-               document.addEventListener('DOMContentLoaded', function(){
-                Swal.fire({
-                        position: "middle",
-                        icon: "success",
-                        title: "Account logged in successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                }).then(() => {
-                    window.location.href = "restobar.php"
-                });
-               })
-            </script>
-           <?php 
+            if ($row['status'] == 1) {
+                ?>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function(){
+                        Swal.fire({
+                                position: "middle",
+                                icon: "warning",
+                                title: "Account not verified, Please verify your account first",
+                                showConfirmButton: false,
+                                timer: 2000
+                        }).then(() => {
+                            window.location.href = "account-verification.php"
+                        });
+                    })
+                    </script>
+                <?php 
+            }else{
+                $_SESSION['name'] = $row['username'];
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['user_id'] = $row['id'];    
+                ?>
+                <script>
+                document.addEventListener('DOMContentLoaded', function(){
+                    Swal.fire({
+                            position: "middle",
+                            icon: "success",
+                            title: "Account logged in successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                    }).then(() => {
+                        window.location.href = "restobar.php"
+                    });
+                })
+                </script>
+            <?php 
+            }
             
         }else{
             ?>

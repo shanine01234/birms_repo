@@ -1,83 +1,88 @@
 <?php 
 require_once('inc/header.php');
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
-
-require "./phpmailer/src/Exception.php";
-require "./phpmailer/src/PHPMailer.php";
-require "./phpmailer/src/SMTP.php";
-
-if (isset($_POST['signup'])) {
-    $name = $_POST['name'];
+if (isset($_POST['submit'])) {
+    $verification_code = $_POST['verification_code'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $verification_code = uniqid();
 
     $stmt = $conn->query("SELECT * FROM users WHERE email = '$email'");
     if ($stmt->num_rows) {
-       ?>
-        <script>
-           document.addEventListener('DOMContentLoaded', function(){
-            Swal.fire({
-                    position: "middle",
-                    icon: "error",
-                    title: "Account already exist",
-                    showConfirmButton: false,
-                    timer: 1500
-            }).then(() => {
-                window.location.href = "signup.php"
-            });
-           })
-        </script>
-       <?php 
-    }else{
-        $hashed = password_hash($password, PASSWORD_DEFAULT);
-        $query = $conn->query("INSERT INTO users SET username = '$name', email ='$email', password= '$hashed', verification_code = '$verification_code'");
-        if ($query) {
+        $row = $stmt->fetch_assoc();
 
-            $mail = new PHPMailer(true);
-            $mail->SMTPDebug = 0;
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'shaninezaspa179@gmail.com';
-            $mail->Password = 'hglesxkasgmryjxq';
-            $mail->Port = 587;
+        if (password_verify($password, $row['password'])) {
+            
+            if ($row['verification_code'] === $verification_code) {
 
-            $mail->SMTPOptions = array(
-                'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                )
-            );
+                $update = $conn->query("UPDATE users SET status = 2 WHERE verification_code = '$verification_code' AND email = '$email'");
 
-            $mail->setFrom('bantayanrestobar@gmail.com', 'Barangay Restobar');
-
-            $mail->addAddress($email);
-            $mail->Subject = "Account Verification Code";
-            $mail->Body = "This is your verification code: " . $verification_code;
-
-            $mail->send();
-
+                ?>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function(){
+                        Swal.fire({
+                                position: "middle",
+                                icon: "success",
+                                title: "Account verified successfully",
+                                showConfirmButton: false,
+                                timer: 1500
+                        }).then(() => {
+                            window.location.href = "login.php"
+                        });
+                    })
+                    </script>
+                <?php 
+            }else{
+                ?>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function(){
+                        Swal.fire({
+                                position: "middle",
+                                icon: "error",
+                                title: "Incorrect verification code",
+                                showConfirmButton: false,
+                                timer: 1500
+                        }).then(() => {
+                            window.location.href = "account-verification.php"
+                        });
+                    })
+                    </script>
+                <?php 
+            }    
+        
+        }else{
             ?>
             <script>
-            document.addEventListener('DOMContentLoaded', function(){
+               document.addEventListener('DOMContentLoaded', function(){
                 Swal.fire({
                         position: "middle",
-                        icon: "success",
-                        title: "Account created successfully",
+                        icon: "error",
+                        title: "Incorrect email or password",
                         showConfirmButton: false,
                         timer: 1500
                 }).then(() => {
                     window.location.href = "account-verification.php"
                 });
-            })
+               })
             </script>
-        <?php 
+           <?php 
         }
+
+    }else{
+        ?>
+        <script>
+           document.addEventListener('DOMContentLoaded', function(){
+            Swal.fire({
+                    position: "middle",
+                    icon: "error",
+                    title: "Incorrect email or password",
+                    showConfirmButton: false,
+                    timer: 1500
+            }).then(() => {
+                window.location.href = "account-verification.php"
+            });
+           })
+        </script>
+       <?php 
     }
 
 }
@@ -244,11 +249,12 @@ if (isset($_POST['signup'])) {
     <!-- Signup Form -->
     <div class="signup-container">
         <a href="login.php" class="btn btn-warning btn-back">Back</a>
-        <h4 class="text-start my-3" style="font-size: 30px;">Sign Up</h4>
+        <h4 class="text-start my-3" style="font-size: 30px;">Account Verification</h4>
+        <p>Please check your email account. We sent a code to your email account.</p>
         <form method="post">
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" class="form-control my-2" required>
+                <label for="verification_code">Verification Code</label>
+                <input type="text" id="verification_code" name="verification_code" class="form-control my-2" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -258,7 +264,7 @@ if (isset($_POST['signup'])) {
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" class="form-control my-2" required>
             </div>
-            <button type="submit" name="signup" class="btn btn-warning btn-block">Sign Up</button>
+            <button type="submit" name="submit" class="btn btn-warning btn-block">Verify</button>
         </form>
     </div>
 
